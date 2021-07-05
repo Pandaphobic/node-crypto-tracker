@@ -13,7 +13,8 @@ Super simple node.js crypto ticker app made with Express.js and powered by the C
 #### Installation:
 
 1. Clone the repo +`gh repo clone Pandaphobic/node-crypto-ticker`
-2. - `$ cd node-crypto-ticker`
+2. cd into the directory
+   - `$ cd node-crypto-ticker`
 3. Install with `npm`
    - `$ npm install`
 
