@@ -1,20 +1,11 @@
-const express = require("express");
-const app = express();
 const dotenv = require("dotenv");
 const fetch = require("node-fetch");
 const allCoins = require("./allCoins.json");
 const chalk = require("chalk");
+const config = require("./config.json");
 
-// LIST OF COINS TO FETCH
-const coinsList = [
-  "ethereum",
-  "matic-network",
-  "litecoin",
-  "bitcoin",
-  "weth",
-  "filecoin",
-  "sushi",
-];
+// INSTATIATE LIST OF COINS TO FETCH
+const coinsList = config.coins;
 // PARAMS
 const coinsToGet = coinsList.join("%2C");
 const vsCurrency = "cad"; // Not changeable yet
@@ -36,7 +27,7 @@ const main = async () => {
     const res = await fetch(url);
     const data = await res.json();
     console.clear();
-    console.log(`🚀 ${chalk.bold.blue("Welcome to Node Ticker!")} 🚀`);
+    console.log(`🚀 ${chalk.bold.magentaBright("Welcome to Node Ticker!")} 🚀`);
     console.log();
 
     // Initialize rows
@@ -71,12 +62,12 @@ const main = async () => {
     // Build, style and align each row
     for (i = 0; i < rows.length; i++) {
       const change24hr = rows[i].change24hr;
-      const row = `${chalk.bold.yellow(
+      const row = `${chalk.bold.cyanBright(
         rows[i].symbol.toUpperCase()
-      )}: ${chalk.bold(rows[i].price)} | ${
+      )}: ${chalk.bold.yellowBright(rows[i].price)}  ${
         change24hr.includes("-")
-          ? chalk.bold.red(rows[i].change24hr)
-          : chalk.bold.green(rows[i].change24hr)
+          ? chalk.bold.redBright(rows[i].change24hr)
+          : chalk.bold.greenBright(rows[i].change24hr)
       }`;
       // print the row to the console
       console.log(row);
@@ -96,8 +87,6 @@ setInterval(function () {
   main();
 }, the_interval);
 
-app.listen(3011, () => {
-  console.clear();
-  console.log(`🚀 ${chalk.bold.blue("Welcome to Node Ticker!")} 🚀`);
-  console.log();
-});
+// console.clear();
+// console.log(`🚀 ${chalk.bold.blue("Welcome to Node Ticker!")} 🚀`);
+// console.log();

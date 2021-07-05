@@ -1,0 +1,11 @@
+{
+  "coins": [
+    "ethereum",
+    "matic-network",
+    "litecoin",
+    "bitcoin",
+    "weth",
+    "filecoin",
+    "sushi"
+  ]
+}
