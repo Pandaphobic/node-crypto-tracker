@@ -6,9 +6,9 @@ const config = require("./config.json");
 
 // INSTATIATE LIST OF COINS TO FETCH
 const coinsList = config.coins;
-// PARAMS
 const coinsToGet = coinsList.join("%2C");
-const vsCurrency = "cad"; // Not changeable yet
+// SET YOUR PREFERRED CURRENCY HERE
+const vsCurrency = "USD".toLowerCase();
 
 // FINAL URL for FETCH
 const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${vsCurrency}&include_24hr_change=true&include_last_updated_at=true`;
@@ -36,9 +36,9 @@ const main = async () => {
     // Gather data for each row
     for (coin in data) {
       const symbol = findCoinById(coin).symbol;
-      const price = data[coin].cad;
+      const price = data[coin][vsCurrency];
       const priceStirng = price.toString(10);
-      const change24hr = data[coin].cad_24h_change.toFixed(2);
+      const change24hr = data[coin][`${vsCurrency}_24h_change`].toFixed(2);
 
       // Spaces to help align everything
       var a = Array(6 - symbol.length)
@@ -54,7 +54,7 @@ const main = async () => {
       const row = {
         symbol: symbol,
         name: coin,
-        price: `${a}$${price} CAD`,
+        price: `${a}$${price} ${vsCurrency.toUpperCase()}`,
         change24hr: `${change24hr.includes("-") ? c : b}${change24hr}%`,
       };
       rows.push(row);
@@ -62,6 +62,7 @@ const main = async () => {
     // Build, style and align each row
     for (i = 0; i < rows.length; i++) {
       const change24hr = rows[i].change24hr;
+      // Output: SYMBOL: $PRICE 24HR_CHANGE
       const row = `${chalk.bold.cyanBright(
         rows[i].symbol.toUpperCase()
       )}: ${chalk.bold.yellowBright(rows[i].price)}  ${
@@ -77,7 +78,7 @@ const main = async () => {
   }
 };
 
-// Initial Run
+// Init
 main();
 
 // SET HOW MANY SECONDS BETWEEN REFRESHES
@@ -86,7 +87,3 @@ var seconds = 5,
 setInterval(function () {
   main();
 }, the_interval);
-
-// console.clear();
-// console.log(`🚀 ${chalk.bold.blue("Welcome to Node Ticker!")} 🚀`);
-// console.log();
