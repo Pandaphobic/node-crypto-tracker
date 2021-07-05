@@ -8,7 +8,7 @@ Super simple node.js crypto ticker app made with Express.js and powered by the C
   width="360" height="310">
 </p>
 
-### Install + Config
+## Installation & Config
 
 #### Installation:
 
