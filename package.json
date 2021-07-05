@@ -1,0 +1,21 @@
+{
+  "name": "node-ticker",
+  "version": "1.0.0",
+  "description": "Customizeable Node CLI Ticker - Powered by CoinGecko",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Chris Steffes - Pandaphobic",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "node-emoji": "^1.10.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
