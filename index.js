@@ -45,10 +45,10 @@ const main = async () => {
       var a = Array(6 - symbol.length)
         .fill("\xa0")
         .join("");
-      var b = Array(8 - priceStirng.length)
+      var b = Array(9 - priceStirng.length)
         .fill("\xa0")
         .join("");
-      var c = Array(7 - priceStirng.length)
+      var c = Array(8 - priceStirng.length)
         .fill("\xa0")
         .join("");
 

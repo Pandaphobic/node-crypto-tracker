@@ -1,6 +1,6 @@
 {
-  "name": "node-ticker",
-  "version": "1.0.0",
+  "name": "node-crypto-ticker",
+  "version": "0.0.6",
   "description": "Customizeable Node CLI Ticker - Powered by CoinGecko",
   "main": "index.js",
   "scripts": {
