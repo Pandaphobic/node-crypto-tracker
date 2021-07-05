@@ -1,7 +1,8 @@
 ## Node Ticker - Super Simple Node.js Crypto Ticker
 
-<p align="center">
-<img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/Screenshot_1.png"
+<p align="right">Super simple node.js crypto ticker app made with Express.js and powered by the CoinGecko API</p>
+<p align="left">
+<img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/Screenshot_1.png" 
   alt="Example View"
-  width="518" height="446">
+  width="360" height="310">
 </p>
