@@ -6,7 +6,7 @@
     "bitcoin",
     "weth",
     "celsius-degree-token",
-    "crypto-com-chain"
+    "usd-coin"
   ],
   "vsCurrency": "cad",
   "refreshRate": 5,

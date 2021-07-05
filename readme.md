@@ -29,7 +29,7 @@ Set your desired coins, currency and refresh rate by adding them to the array in
     "bitcoin",
     "weth",
     "celsius-degree-token",
-    "crypto-com-chain"
+    "usdc"
   ],
   "vsCurrency": "cad",
   "refreshRate": 5,
