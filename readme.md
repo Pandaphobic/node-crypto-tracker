@@ -37,5 +37,4 @@ Set your desired coins, currency and refresh rate by adding them to the array in
 
 #### All Coins?
 
-The list of coins at the bottom is used to get metadata about coins. Rather than requesting the list for each coin, it is included once and referenced. Feel free to update the list if you can't find your coin in it. The list comes from the Coin Gecko API [`/coins/list`]](https://api.coingecko.com/api/v3/coins/list
-)
+The list of coins at the bottom is used to get metadata about coins. Rather than requesting the list for each coin, it is included once and referenced. Feel free to update the list if you can't find your coin in it. The list comes from the Coin Gecko API [`/coins/list`](https://api.coingecko.com/api/v3/coins/list)
