@@ -1,12 +1,12 @@
-const dotenv = require("dotenv");
 const fetch = require("node-fetch");
-const allCoins = require("./allCoins.json");
 const chalk = require("chalk");
 const config = require("./config.json");
 
 // INSTATIATE LIST OF COINS TO FETCH
 const coinsList = config.coins;
 const coinsToGet = coinsList.join("%2C");
+const allCoins = config.allCoins;
+
 // SET YOUR PREFERRED CURRENCY HERE
 const VS_CURRENCY = "CAD".toLowerCase();
 const REFRESH_RATE = config.refreshRate; // in Seconds
@@ -83,8 +83,8 @@ const main = async () => {
 main();
 
 // SET HOW MANY SECONDS BETWEEN REFRESHES
-var seconds = REFRESH_RATE,
-  the_interval = seconds * 1000;
+var seconds = REFRESH_RATE;
+var interval = seconds * 1000;
 setInterval(function () {
   main();
-}, the_interval);
+}, interval);
