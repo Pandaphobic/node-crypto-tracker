@@ -8,13 +8,13 @@ const coinsToGet = coinsList.join("%2C");
 const allCoins = config.allCoins;
 
 // SET YOUR PREFERRED CURRENCY HERE
-const VS_CURRENCY = "CAD".toLowerCase();
+const VS_CURRENCY = config.vsCurrency.toLowerCase();
 const REFRESH_RATE = config.refreshRate; // in Seconds
 
 // FINAL URL for FETCH
 const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`;
 
-// Utils
+// Find Symbol from master list
 const findCoinById = id => {
   const [key, coin] = Object.entries(allCoins).find(
     ([key, coin]) => coin.id === id

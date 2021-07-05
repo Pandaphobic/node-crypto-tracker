@@ -1,5 +1,14 @@
 {
-  "coins": ["ethereum", "matic-network", "litecoin", "bitcoin", "weth"],
+  "coins": [
+    "ethereum",
+    "matic-network",
+    "litecoin",
+    "bitcoin",
+    "weth",
+    "celsius-degree-token",
+    "crypto-com-chain"
+  ],
+  "vsCurrency": "cad",
   "refreshRate": 5,
   "allCoins": [
     {
