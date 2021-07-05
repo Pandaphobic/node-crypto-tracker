@@ -12,7 +12,7 @@ const coinsList = [
   "litecoin",
   "bitcoin",
   "weth",
-  "tether",
+  "filecoin",
   "sushi",
 ];
 // PARAMS
