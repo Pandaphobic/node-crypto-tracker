@@ -8,10 +8,11 @@ const config = require("./config.json");
 const coinsList = config.coins;
 const coinsToGet = coinsList.join("%2C");
 // SET YOUR PREFERRED CURRENCY HERE
-const vsCurrency = "USD".toLowerCase();
+const VS_CURRENCY = "CAD".toLowerCase();
+const REFRESH_RATE = config.refreshRate; // in Seconds
 
 // FINAL URL for FETCH
-const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${vsCurrency}&include_24hr_change=true&include_last_updated_at=true`;
+const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`;
 
 // Utils
 const findCoinById = id => {
@@ -36,9 +37,9 @@ const main = async () => {
     // Gather data for each row
     for (coin in data) {
       const symbol = findCoinById(coin).symbol;
-      const price = data[coin][vsCurrency];
+      const price = data[coin][VS_CURRENCY];
       const priceStirng = price.toString(10);
-      const change24hr = data[coin][`${vsCurrency}_24h_change`].toFixed(2);
+      const change24hr = data[coin][`${VS_CURRENCY}_24h_change`].toFixed(2);
 
       // Spaces to help align everything
       var a = Array(6 - symbol.length)
@@ -54,7 +55,7 @@ const main = async () => {
       const row = {
         symbol: symbol,
         name: coin,
-        price: `${a}$${price} ${vsCurrency.toUpperCase()}`,
+        price: `${a}$${price} ${VS_CURRENCY.toUpperCase()}`,
         change24hr: `${change24hr.includes("-") ? c : b}${change24hr}%`,
       };
       rows.push(row);
@@ -82,7 +83,7 @@ const main = async () => {
 main();
 
 // SET HOW MANY SECONDS BETWEEN REFRESHES
-var seconds = 5,
+var seconds = REFRESH_RATE,
   the_interval = seconds * 1000;
 setInterval(function () {
   main();
