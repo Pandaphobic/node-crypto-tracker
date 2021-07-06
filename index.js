@@ -47,7 +47,9 @@ const healthFactor = async data => {
   const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
   const currency = VS_CURRENCY.toUpperCase();
 
-  console.log(`  AAVE Health Factor - ${healthFactor}`);
+  console.log(
+    `${chalk.bold.bgMagenta(`  AAVE Health Factor - ${healthFactor}   `)}`
+  );
   console.log(`  Collateral....${collateralInCurrency} ${currency}`);
   console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
 };
