@@ -52,13 +52,10 @@ const healthFactor = async data => {
   console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
 };
 
-const ticker = async () => {
+const ticker = async data => {
   try {
-    const res = await fetch(url);
-    const data = await res.json();
-    console.clear();
     console.log(`🚀 ${chalk.bold.magentaBright("Welcome to Node Ticker!")} 🚀`);
-    console.log();
+    separator();
 
     // Initialize rows
     const rows = [];
@@ -111,7 +108,8 @@ const ticker = async () => {
 // Main API Call
 const main = async () => {
   const data = await updatePrices();
-  await ticker();
+  console.clear();
+  await ticker(data);
   await separator();
   await healthFactor(data);
 };
