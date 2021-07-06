@@ -22,8 +22,37 @@ const findCoinById = id => {
   return coin;
 };
 
-// Main API Call
-const main = async () => {
+const separator = async () => {
+  console.log(">----------------------------<");
+};
+
+const updatePrices = async () => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err.message); //can be console.error
+    return err.message;
+  }
+};
+
+const healthFactor = async data => {
+  const wethPrice = data.weth[VS_CURRENCY];
+  const collateralInEth = config.aave.collateralInEth; // TO BE SET IN CONFIG
+  const collateralInCurrency = (collateralInEth * wethPrice).toFixed(2);
+  const borrowedInEth = config.aave.borrowedInEth;
+  const borrowedInCurrency = (borrowedInEth * wethPrice).toFixed(2);
+  const LT = 0.825;
+  const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
+  const currency = VS_CURRENCY.toUpperCase();
+
+  console.log(`  AAVE Health Factor - ${healthFactor}`);
+  console.log(`  Collateral....${collateralInCurrency} ${currency}`);
+  console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
+};
+
+const ticker = async () => {
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -79,6 +108,13 @@ const main = async () => {
   }
 };
 
+// Main API Call
+const main = async () => {
+  const data = await updatePrices();
+  await ticker();
+  await separator();
+  await healthFactor(data);
+};
 // Init
 main();
 

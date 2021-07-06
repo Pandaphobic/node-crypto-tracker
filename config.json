@@ -8,8 +8,12 @@
     "celsius-degree-token",
     "usd-coin"
   ],
-  "vsCurrency": "cad",
+  "vsCurrency": "usd",
   "refreshRate": 5,
+  "aave": {
+    "collateralInEth": 0.646,
+    "borrowedInEth": 0.403
+  },
   "allCoins": [
     {
       "id": "01coin",
