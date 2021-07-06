@@ -12,7 +12,8 @@
   "refreshRate": 5,
   "aave": {
     "collateralInEth": 0.646,
-    "borrowedInEth": 0.403
+    "borrowedInEth": 0.403,
+    "borrowedInUsd": 904.34107
   },
   "allCoins": [
     {

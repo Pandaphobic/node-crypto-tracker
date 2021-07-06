@@ -23,7 +23,7 @@ const findCoinById = id => {
 };
 
 const separator = async () => {
-  console.log(">----------------------------<");
+  console.log("------------------------------");
 };
 
 const updatePrices = async () => {
@@ -38,17 +38,25 @@ const updatePrices = async () => {
 };
 
 const healthFactor = async data => {
+  // Externals
   const wethPrice = data.weth[VS_CURRENCY];
-  const collateralInEth = config.aave.collateralInEth; // TO BE SET IN CONFIG
-  const collateralInCurrency = (collateralInEth * wethPrice).toFixed(2);
-  const borrowedInEth = config.aave.borrowedInEth;
-  const borrowedInCurrency = (borrowedInEth * wethPrice).toFixed(2);
-  const LT = 0.825;
-  const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
   const currency = VS_CURRENCY.toUpperCase();
 
+  // Collateral
+  const collateralInEth = await config.aave.collateralInEth; // TO BE SET IN CONFIG
+  const collateralInCurrency = (collateralInEth * wethPrice).toFixed(2);
+
+  // Borrowed
+  const borrowedInUSD = await config.aave.borrowedInUsd;
+  const borrowedInEth = borrowedInUSD / wethPrice;
+  const borrowedInCurrency = (borrowedInEth * wethPrice).toFixed(2);
+
+  // Liquidation Threshold set by AAVE - Static
+  const LT = 0.825;
+  const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
+
   console.log(
-    `${chalk.bold.bgMagenta(`  AAVE Health Factor - ${healthFactor}   `)}`
+    `${chalk.bold.bgMagenta(`  AAVE Health Factor ~${healthFactor}   `)}`
   );
   console.log(`  Collateral....${collateralInCurrency} ${currency}`);
   console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
@@ -56,8 +64,11 @@ const healthFactor = async data => {
 
 const ticker = async data => {
   try {
-    console.log(`🚀 ${chalk.bold.magentaBright("Welcome to Node Ticker!")} 🚀`);
+    console.log(
+      `🚀${chalk.bold.magentaBright("Welcome to Crypto Tracker!")}🚀`
+    );
     separator();
+    console.log(`${chalk.bold.bgBlueBright(`        Crypto Ticker         `)}`);
 
     // Initialize rows
     const rows = [];
