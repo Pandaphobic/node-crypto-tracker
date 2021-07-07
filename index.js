@@ -3,16 +3,12 @@ const chalk = require("chalk");
 const config = require("./config.json");
 
 // INSTATIATE LIST OF COINS TO FETCH
-const coinsList = config.coins;
-const coinsToGet = coinsList.join("%2C");
+const coinsToGet = config.coins.join("%2C");
 const allCoins = config.allCoins;
 
 // SET YOUR PREFERRED CURRENCY HERE
 const VS_CURRENCY = config.vsCurrency.toLowerCase();
 const REFRESH_RATE = config.refreshRate; // in Seconds
-
-// FINAL URL for FETCH
-const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`;
 
 // Find Symbol from master list
 const findCoinById = id => {
@@ -22,11 +18,15 @@ const findCoinById = id => {
   return coin;
 };
 
-const separator = async () => {
-  console.log("------------------------------");
+const separator = char => {
+  const arr = new Array(31).fill(char);
+  console.log(arr.join(""));
 };
 
 const updatePrices = async () => {
+  // FINAL URL for FETCH
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`;
+
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -37,29 +37,34 @@ const updatePrices = async () => {
   }
 };
 
-const healthFactor = async data => {
+const defiDashboard = async data => {
+  console.log(`${chalk.bold(`      ✨ Defi Dashboard ✨`)}`);
+  aaveHealthFactor(data);
+};
+
+const aaveHealthFactor = data => {
   // Externals
   const wethPrice = data.weth[VS_CURRENCY];
   const currency = VS_CURRENCY.toUpperCase();
 
   // Collateral
-  const collateralInEth = await config.aave.collateralInEth; // TO BE SET IN CONFIG
+  const collateralInEth = config.aave.collateralInEth; // TO BE SET IN CONFIG
   const collateralInCurrency = (collateralInEth * wethPrice).toFixed(2);
 
   // Borrowed
-  const borrowedInUSD = await config.aave.borrowedInUsd;
+  const borrowedInUSD = config.aave.borrowedInUsd;
   const borrowedInEth = borrowedInUSD / wethPrice;
-  const borrowedInCurrency = (borrowedInEth * wethPrice).toFixed(2);
+  // const borrowedInCurrency = (borrowedInEth * wethPrice).toFixed(2);
 
   // Liquidation Threshold set by AAVE - Static
   const LT = 0.825;
   const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
 
   console.log(
-    `${chalk.bold.bgMagenta(`  AAVE Health Factor ~${healthFactor}   `)}`
+    `${chalk.bold.bgMagenta(`AAVE Health Factor        ~${healthFactor}`)}`
   );
-  console.log(`  Collateral....${collateralInCurrency} ${currency}`);
-  console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
+  // console.log(`  Collateral....${collateralInCurrency} ${currency}`);
+  // console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
 };
 
 const ticker = async data => {
@@ -67,8 +72,10 @@ const ticker = async data => {
     console.log(
       `🚀${chalk.bold.magentaBright("Welcome to Crypto Tracker!")}🚀`
     );
-    separator();
-    console.log(`${chalk.bold.bgBlueBright(`        Crypto Ticker         `)}`);
+    separator("*");
+    console.log(
+      `${chalk.bold.bgBlueBright(`         Crypto Ticker         `)}`
+    );
 
     // Initialize rows
     const rows = [];
@@ -81,21 +88,12 @@ const ticker = async data => {
       const change24hr = data[coin][`${VS_CURRENCY}_24h_change`].toFixed(2);
 
       // Spaces to help align everything
-      var a = Array(6 - symbol.length)
-        .fill("\xa0")
-        .join("");
-      var b = Array(9 - priceStirng.length)
-        .fill("\xa0")
-        .join("");
-      var c = Array(8 - priceStirng.length)
-        .fill("\xa0")
-        .join("");
 
       const row = {
         symbol: symbol,
         name: coin,
-        price: `${a}$${price} ${VS_CURRENCY.toUpperCase()}`,
-        change24hr: `${change24hr.includes("-") ? c : b}${change24hr}%`,
+        price: `$${price} ${VS_CURRENCY.toUpperCase()}`,
+        change24hr: `${change24hr}%`,
       };
       rows.push(row);
     }
@@ -122,9 +120,10 @@ const ticker = async data => {
 const main = async () => {
   const data = await updatePrices();
   console.clear();
+  separator("*");
   await ticker(data);
-  await separator();
-  await healthFactor(data);
+  separator("*");
+  await defiDashboard(data);
 };
 // Init
 main();

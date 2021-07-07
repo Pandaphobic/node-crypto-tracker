@@ -6,7 +6,8 @@
     "bitcoin",
     "weth",
     "celsius-degree-token",
-    "usd-coin"
+    "usd-coin",
+    "01coin"
   ],
   "vsCurrency": "usd",
   "refreshRate": 5,
