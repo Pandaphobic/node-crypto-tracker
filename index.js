@@ -6,6 +6,8 @@ const config = require("./config.json");
 const coinsToGet = config.coins.join("%2C");
 const allCoins = config.allCoins;
 
+const WIDTH = 32;
+
 // SET YOUR PREFERRED CURRENCY HERE
 const VS_CURRENCY = config.vsCurrency.toLowerCase();
 const REFRESH_RATE = config.refreshRate; // in Seconds
@@ -19,7 +21,7 @@ const findCoinById = id => {
 };
 
 const separator = char => {
-  const arr = new Array(31).fill(char);
+  const arr = new Array(WIDTH).fill(char);
   console.log(arr.join(""));
 };
 
@@ -61,25 +63,49 @@ const aaveHealthFactor = data => {
   const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
 
   console.log(
-    `${chalk.bold.bgMagenta(`AAVE Health Factor        ~${healthFactor}`)}`
+    `${chalk.bold.bgMagenta(`AAVE Health Factor         ~${healthFactor}`)}`
   );
   // console.log(`  Collateral....${collateralInCurrency} ${currency}`);
   // console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
 };
 
-const ticker = async data => {
+const ticker2 = data => {
   try {
-    console.log(
-      `🚀${chalk.bold.magentaBright("Welcome to Crypto Tracker!")}🚀`
-    );
-    separator("*");
-    console.log(
-      `${chalk.bold.bgBlueBright(`         Crypto Ticker         `)}`
-    );
+    console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       USD`));
+    const rows = [];
+
+    for (coin in data) {
+      // const row = ["LTC", "$136.75 USD", "-0.00"];
+      const symbol = `${`${findCoinById(coin).symbol}`.toUpperCase()}:`;
+      const price = `${data[coin][VS_CURRENCY]}`;
+      const change24hr = `${data[coin][`${VS_CURRENCY}_24h_change`].toFixed(
+        2
+      )}%`;
+
+      const row = [
+        symbol,
+        price,
+        change24hr,
+        symbol.length,
+        price.length,
+        change24hr.length,
+      ];
+      rows.push(row);
+    }
+    console.log(rows);
+
+    // console.log(data);
+  } catch (err) {
+    console.log(`ticker2 error: ${err}`);
+  }
+};
+
+const ticker = data => {
+  try {
+    console.log(chalk.bold.bgBlueBright(`         Crypto Ticker          `));
 
     // Initialize rows
     const rows = [];
-
     // Gather data for each row
     for (coin in data) {
       const symbol = findCoinById(coin).symbol;
@@ -87,14 +113,13 @@ const ticker = async data => {
       const priceStirng = price.toString(10);
       const change24hr = data[coin][`${VS_CURRENCY}_24h_change`].toFixed(2);
 
-      // Spaces to help align everything
-
       const row = {
         symbol: symbol,
         name: coin,
         price: `$${price} ${VS_CURRENCY.toUpperCase()}`,
         change24hr: `${change24hr}%`,
       };
+
       rows.push(row);
     }
     // Build, style and align each row
@@ -120,10 +145,15 @@ const ticker = async data => {
 const main = async () => {
   const data = await updatePrices();
   console.clear();
-  separator("*");
-  await ticker(data);
-  separator("*");
-  await defiDashboard(data);
+  separator("-");
+  console.log(
+    `🚀 ${chalk.bold.magentaBright("Welcome to Crypto Tracker!")} 🚀`
+  );
+  separator("-");
+  // ticker2(data);
+  ticker(data);
+  separator("-");
+  defiDashboard(data);
 };
 // Init
 main();
