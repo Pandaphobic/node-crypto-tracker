@@ -32,6 +32,8 @@ Set your desired coins, currency and refresh rate by adding them to the array in
   borrowedInUsd = 8655
 ```
 
-#### All Coins?
+#### API Calls Used
 
-The list of coins at the bottom is used to get metadata about coins. Rather than requesting the list for each coin, it is included once and referenced. Feel free to update the list if you can't find your coin in it. The list comes from the Coin Gecko API [`/coins/list`](https://api.coingecko.com/api/v3/coins/list)
+Coin Gecko Coins [`/coins/list`](https://api.coingecko.com/api/v3/coins/list)
+Eth Gas Price [`ethgasAPI.json?api-key=ETH_GAS_API_KEY`](https://ethgasstation.info/api/ethgasAPI.json?api-key=process.env.ETH_GAS_API_KEY)
+Coin Gecko API [`/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true`](https://api.coingecko.com/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true)
