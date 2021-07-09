@@ -6,9 +6,11 @@
   More information: https://docs.aave.com/risk/asset-risk/risk-parameters#health-factor
 
 */
-
 var chalk = require("chalk")
-var config = require("../config.json")
+const fs = require("fs")
+const toml = require("toml")
+
+const config = toml.parse(fs.readFileSync("./config.toml", "utf-8"))
 
 function aaveHealthFactor(coinPrices, VS_CURRENCY) {
   // Externals

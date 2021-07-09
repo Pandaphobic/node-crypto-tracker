@@ -1,6 +1,11 @@
 var fetch = require("node-fetch")
 var chalk = require("chalk")
-var config = require("./config.json")
+const fs = require("fs")
+const toml = require("toml")
+
+const config = toml.parse(fs.readFileSync("./config.toml", "utf-8"))
+
+console.log(config.ticker.coins)
 
 // ** Everything below can be referenced globally and is updated at app start **
 // -- GLOBAL API DATA -- //
@@ -9,14 +14,13 @@ let coinPrices = `` // price in vs_currency for each coin in config
 let gasPrice = ``
 
 // Import Modules
-// const { aaveHealthFactor } = require("./modules/aavehealthfactor")
 const { aaveHealthFactor } = require("./modules/aavehealthfactor.js")
 
 // Config + Imported From Config
 const coinsToGet = ["ethereum", "matic-network", "litecoin", "bitcoin", "weth", "celsius-degree-token", "usd-coin"].join("%2C")
 const WIDTH = 32
-const VS_CURRENCY = config.vsCurrency.toLowerCase()
-const REFRESH_RATE = config.refreshRate // in Seconds
+const VS_CURRENCY = config.ticker.vsCurrency.toLowerCase()
+const REFRESH_RATE = config.ticker.refreshRate // in Seconds
 
 // Find Symbol from master list
 const findCoinById = id => {
@@ -29,7 +33,7 @@ const separator = char => {
   console.log(arr.join(""))
 }
 
-const getCoinsList = async () => {
+const updateCoinsList = async () => {
   const url = "https://api.coingecko.com/api/v3/coins/list?include_platform=true"
 
   try {
@@ -43,7 +47,7 @@ const getCoinsList = async () => {
   }
 }
 
-const updatePrices = async () => {
+const updateCoinPrices = async () => {
   // FINAL URL for FETCH
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`
 
@@ -53,6 +57,18 @@ const updatePrices = async () => {
     return coinPrices
   } catch (err) {
     console.log(err) //can be console.error
+    return err
+  }
+}
+
+const updateGasPrice = async () => {
+  try {
+    const res = await fetch("https://ethgasstation.info/api/ethgasAPI.json?api-key=d8a083cf3f605644c2b7d64a3361c76f92a210db4f41bf091d43fb785734")
+    const data = await res.json()
+
+    return data
+  } catch (err) {
+    console.log(err)
     return err
   }
 }
@@ -119,27 +135,16 @@ const ticker = data => {
   }
 }
 
-const updateGasPrice = async () => {
-  try {
-    const res = await fetch("https://ethgasstation.info/api/ethgasAPI.json?api-key=d8a083cf3f605644c2b7d64a3361c76f92a210db4f41bf091d43fb785734")
-    const data = await res.json()
-
-    return data
-  } catch (err) {
-    console.log(err)
-    return err
-  }
-}
-
 // Main API Call
 const main = async () => {
   // API CALLS
-  allCoinsList = await getCoinsList()
-  coinPrices = await updatePrices()
+  allCoinsList = await updateCoinsList()
+  coinPrices = await updateCoinPrices()
   gasPrice = await updateGasPrice()
 
   // START OF DRAW
   console.clear()
+
   separator("-")
   console.log(`🚀 ${chalk.bold.magentaBright("Welcome to Crypto Tracker!")} 🚀`)
   separator("-")
