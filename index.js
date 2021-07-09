@@ -25,6 +25,19 @@ const separator = char => {
   console.log(arr.join(""));
 };
 
+// const getCoinsList = async () =>{
+//   const url = "https://api.coingecko.com/api/v3/coins/list?include_platform=true"
+
+//   try {
+//     const res = await fetch(url)
+//     const coninsList = await res.json()
+//     return data;
+//   } catch(err) {
+//     console.log(err)
+//     return err
+//   }
+// }
+
 const updatePrices = async () => {
   // FINAL URL for FETCH
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`;
@@ -34,8 +47,8 @@ const updatePrices = async () => {
     const data = await res.json();
     return data;
   } catch (err) {
-    console.log(err.message); //can be console.error
-    return err.message;
+    console.log(err); //can be console.error
+    return err;
   }
 };
 
@@ -63,7 +76,7 @@ const aaveHealthFactor = data => {
   const healthFactor = ((collateralInEth * LT) / borrowedInEth).toFixed(2);
 
   console.log(
-    `${chalk.bold.bgMagenta(`AAVE Health Factor         ~${healthFactor}`)}`
+    `${chalk.bold.bgMagenta(`👻 AAVE Health Factor     ~${healthFactor} `)}`
   );
   // console.log(`  Collateral....${collateralInCurrency} ${currency}`);
   // console.log(`  Borrowed.......${borrowedInCurrency} ${currency}`);
@@ -141,6 +154,24 @@ const ticker = data => {
   }
 };
 
+const gasPrice = async () => {
+  try {
+    const res = await fetch(
+      "https://ethgasstation.info/api/ethgasAPI.json?api-key=d8a083cf3f605644c2b7d64a3361c76f92a210db4f41bf091d43fb785734"
+    );
+    const data = await res.json();
+    console.log(
+      chalk.bgGrey.bold(
+        `🔥 Gas Price Avg.           ${`${chalk.whiteBright(data.average)}`} `
+      )
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
 // Main API Call
 const main = async () => {
   const data = await updatePrices();
@@ -154,6 +185,7 @@ const main = async () => {
   ticker(data);
   separator("-");
   defiDashboard(data);
+  gasPrice();
 };
 // Init
 main();

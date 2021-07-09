@@ -6,11 +6,10 @@
     "bitcoin",
     "weth",
     "celsius-degree-token",
-    "usd-coin",
-    "01coin"
+    "usd-coin"
   ],
   "vsCurrency": "usd",
-  "refreshRate": 5,
+  "refreshRate": 500,
   "aave": {
     "collateralInEth": 0.646,
     "borrowedInEth": 0.403,
