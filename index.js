@@ -33,10 +33,6 @@ const COINS_TO_GET = config.ticker.coins.join("%2C")
 const VS_CURRENCY = config.ticker.vsCurrency.toLowerCase()
 const REFRESH_RATE = config.ticker.refreshRate // in Seconds
 
-const separator = char => {
-  const arr = new Array(WIDTH).fill(char)
-  console.log(arr.join(""))
-}
 // API CALL FOR COINS + PRICES + 24HRCHANGE
 const updateCoinPrices = async () => {
   // FINAL URL for FETCH
@@ -64,8 +60,13 @@ const updateGasPrice = async () => {
   }
 }
 
+const separator = char => {
+  const arr = new Array(WIDTH).fill(char)
+  console.log(arr.join(""))
+}
+
 // Main API Call
-const main = async () => {
+const main = (async () => {
   // API CALLS
   allCoinsList = await allCoinsList()
   coinPrices = await updateCoinPrices()
@@ -82,9 +83,7 @@ const main = async () => {
   separator("-")
   console.log(chalk.bgGrey.bold(`🔥 Gas Price Avg.           ${`${chalk.whiteBright(gasPrice.average)}`} `))
   aaveHealthFactor(coinPrices, VS_CURRENCY, config)
-}
-// Init
-main()
+})()
 
 // SET HOW MANY SECONDS BETWEEN REFRESHES
 var seconds = REFRESH_RATE
