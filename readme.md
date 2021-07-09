@@ -5,7 +5,7 @@ Super simple node.js crypto ticker app made with Express.js and powered by the C
 <p align="center">
 <img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/example_screenshot.png" 
   alt="Example View" 
-  width="360" height="310">
+  width="292" height="305">
 </p>
 
 ## Installation & Config
