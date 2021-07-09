@@ -1,6 +1,6 @@
-## Node Ticker - Super Simple Node.js Crypto Ticker
+## Node Ticker - Super Simple Node.js Crypto Tracker
 
-Super simple node.js crypto ticker app made with Express.js and powered by the CoinGecko API. Customize the coinsList array in index.js to see the symbol, price and 24hr change for each coin in the list.
+Super simple node.js crypto tracker app powered by CoinGecko and Eth Gas Station APIs. Customize the config.toml set the coins you want to see as well as your aave info to see the health factor!
 
 <p align="center">
 <img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/example_screenshot.png" 
@@ -18,20 +18,18 @@ Super simple node.js crypto ticker app made with Express.js and powered by the C
 
 #### Config
 
-Set your desired coins, currency and refresh rate by adding them to the array in the config.json file
+Set your desired coins, currency and refresh rate by adding them to the array in the config.toml file. For AAVE, the three existing entries are the minimum requirement to get health factor. For now, you will need to update these manually.
 
 ```
-  "coins": [
-    "ethereum",
-    "matic-network",
-    "litecoin",
-    "bitcoin",
-    "weth",
-    "celsius-degree-token",
-    "usdc"
-  ],
-  "vsCurrency": "cad",
-  "refreshRate": 5,
+[ticker]
+  coins = ["ethereum","litecoin","bitcoin","weth","usd-coin"]
+  vsCurrency = "usd"
+  refreshRate = 500
+
+[aave]
+  collateralInEth = 5
+  borrowedInEth = 4
+  borrowedInUsd = 8655
 ```
 
 #### All Coins?
