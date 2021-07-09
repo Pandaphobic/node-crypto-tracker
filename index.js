@@ -2,54 +2,45 @@ var fetch = require("node-fetch")
 var chalk = require("chalk")
 const fs = require("fs")
 const toml = require("toml")
+require("dotenv").config()
 
 const config = toml.parse(fs.readFileSync("./config.toml", "utf-8"))
 
-console.log(config.ticker.coins)
-
 // ** Everything below can be referenced globally and is updated at app start **
 // -- GLOBAL API DATA -- //
-let allCoinsList = `` // id, symbol etc
-let coinPrices = `` // price in vs_currency for each coin in config
-let gasPrice = ``
-
-// Import Modules
-const { aaveHealthFactor } = require("./modules/aavehealthfactor.js")
-
-// Config + Imported From Config
-const coinsToGet = ["ethereum", "matic-network", "litecoin", "bitcoin", "weth", "celsius-degree-token", "usd-coin"].join("%2C")
-const WIDTH = 32
-const VS_CURRENCY = config.ticker.vsCurrency.toLowerCase()
-const REFRESH_RATE = config.ticker.refreshRate // in Seconds
-
-// Find Symbol from master list
-const findCoinById = id => {
-  const [key, coin] = Object.entries(allCoinsList).find(([key, coin]) => coin.id === id)
-  return coin
-}
-
-const separator = char => {
-  const arr = new Array(WIDTH).fill(char)
-  console.log(arr.join(""))
-}
-
-const updateCoinsList = async () => {
-  const url = "https://api.coingecko.com/api/v3/coins/list?include_platform=true"
-
+var allCoinsList = async () => {
   try {
-    const res = await fetch(url)
-
-    allCoinsList = await res.json()
-    return allCoinsList
+    const res = await fetch("https://api.coingecko.com/api/v3/coins/list?include_platform=true")
+    const data = await res.json()
+    return data
   } catch (err) {
     console.log(err)
     return err
   }
 }
+// let allCoinsList = `` // id, symbol etc
+let coinPrices = `` // price in vs_currency for each coin in config
+let gasPrice = ``
 
+// Import Modules
+const { aaveHealthFactor } = require("./modules/aavehealthfactor.js")
+const { ticker } = require("./modules/ticker")
+
+// Config + Imported From Config
+const WIDTH = 32
+const COINS_TO_GET = config.ticker.coins.join("%2C")
+
+const VS_CURRENCY = config.ticker.vsCurrency.toLowerCase()
+const REFRESH_RATE = config.ticker.refreshRate // in Seconds
+
+const separator = char => {
+  const arr = new Array(WIDTH).fill(char)
+  console.log(arr.join(""))
+}
+// API CALL FOR COINS + PRICES + 24HRCHANGE
 const updateCoinPrices = async () => {
   // FINAL URL for FETCH
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coinsToGet}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${COINS_TO_GET}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`
 
   try {
     const res = await fetch(url)
@@ -60,10 +51,10 @@ const updateCoinPrices = async () => {
     return err
   }
 }
-
+// API CALL FOR GASPRICE
 const updateGasPrice = async () => {
   try {
-    const res = await fetch("https://ethgasstation.info/api/ethgasAPI.json?api-key=d8a083cf3f605644c2b7d64a3361c76f92a210db4f41bf091d43fb785734")
+    const res = await fetch(`https://ethgasstation.info/api/ethgasAPI.json?api-key=${process.env.ETH_GAS_API_KEY}`)
     const data = await res.json()
 
     return data
@@ -73,85 +64,22 @@ const updateGasPrice = async () => {
   }
 }
 
-const defiDashboard = async data => {
-  console.log(`${chalk.bold(`      ✨ Defi Dashboard ✨`)}`)
-  separator("-")
-}
-
-const ticker2 = data => {
-  try {
-    console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       USD`))
-    const rows = []
-
-    for (coin in data) {
-      // const row = ["LTC", "$136.75 USD", "-0.00"];
-      const symbol = `${`${findCoinById(coin).symbol}`.toUpperCase()}:`
-      const price = `${data[coin][VS_CURRENCY]}`
-      const change24hr = `${data[coin][`${VS_CURRENCY}_24h_change`].toFixed(2)}%`
-
-      const row = [symbol, price, change24hr, symbol.length, price.length, change24hr.length]
-      rows.push(row)
-    }
-    console.log(rows)
-
-    // console.log(data);
-  } catch (err) {
-    console.log(`ticker2 error: ${err}`)
-  }
-}
-
-const ticker = data => {
-  try {
-    console.log(chalk.bold.bgBlueBright(`         Crypto Ticker          `))
-
-    // Initialize rows
-    const rows = []
-    // Gather data for each row
-    for (coin in data) {
-      const symbol = findCoinById(coin).symbol
-      const price = data[coin][VS_CURRENCY]
-      const priceStirng = price.toString(10)
-      const change24hr = data[coin][`${VS_CURRENCY}_24h_change`].toFixed(2)
-
-      const row = {
-        symbol: symbol,
-        name: coin,
-        price: `$${price} ${VS_CURRENCY.toUpperCase()}`,
-        change24hr: `${change24hr}%`
-      }
-
-      rows.push(row)
-    }
-    // Build, style and align each row
-    for (i = 0; i < rows.length; i++) {
-      const change24hr = rows[i].change24hr
-      // Output: SYMBOL: $PRICE 24HR_CHANGE
-      const row = `${chalk.bold.cyanBright(rows[i].symbol.toUpperCase())}: ${chalk.bold.yellowBright(rows[i].price)}  ${change24hr.includes("-") ? chalk.bold.redBright(rows[i].change24hr) : chalk.bold.greenBright(rows[i].change24hr)}`
-      // print the row to the console
-      console.log(row)
-    }
-  } catch (err) {
-    console.log(err.message) //can be console.error
-  }
-}
-
 // Main API Call
 const main = async () => {
   // API CALLS
-  allCoinsList = await updateCoinsList()
+  allCoinsList = await allCoinsList()
   coinPrices = await updateCoinPrices()
   gasPrice = await updateGasPrice()
 
   // START OF DRAW
   console.clear()
-
   separator("-")
   console.log(`🚀 ${chalk.bold.magentaBright("Welcome to Crypto Tracker!")} 🚀`)
   separator("-")
-  // ticker2(data);
-  ticker(coinPrices)
+  await ticker(coinPrices, allCoinsList, VS_CURRENCY)
   separator("-")
-  defiDashboard()
+  console.log(`${chalk.bold(chalk.bgWhite.black(`      ✨ DeFi Dashboard ✨      `))}`)
+  separator("-")
   console.log(chalk.bgGrey.bold(`🔥 Gas Price Avg.           ${`${chalk.whiteBright(gasPrice.average)}`} `))
   aaveHealthFactor(coinPrices, VS_CURRENCY, config)
 }
