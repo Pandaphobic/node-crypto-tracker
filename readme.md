@@ -34,6 +34,6 @@ Set your desired coins, currency and refresh rate by adding them to the array in
 
 #### API Calls Used
 
-Coin Gecko Coins [`/coins/list`](https://api.coingecko.com/api/v3/coins/list)
-Eth Gas Price [`ethgasAPI.json?api-key=ETH_GAS_API_KEY`](https://ethgasstation.info/api/ethgasAPI.json?api-key=process.env.ETH_GAS_API_KEY)
-Coin Gecko API [`/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true`](https://api.coingecko.com/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true)
+- Coin Gecko Coins [`/coins/list`](https://api.coingecko.com/api/v3/coins/list)
+- Eth Gas Price [`ethgasAPI.json?api-key=ETH_GAS_API_KEY`](https://ethgasstation.info/api/ethgasAPI.json?api-key=process.env.ETH_GAS_API_KEY)
+- Coin Gecko API [`/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true`](https://api.coingecko.com/api/v3/simple/price?ids=COINS_TO_GET&vs_currencies=VS_CURRENCY&include_24hr_change=true&include_last_updated_at=true)
