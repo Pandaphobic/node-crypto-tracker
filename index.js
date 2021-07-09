@@ -146,7 +146,7 @@ const main = async () => {
   // ticker2(data);
   ticker(coinPrices)
   separator("-")
-  defiDashboard(coinPrices)
+  defiDashboard()
   console.log(chalk.bgGrey.bold(`🔥 Gas Price Avg.           ${`${chalk.whiteBright(gasPrice.average)}`} `))
   aaveHealthFactor(coinPrices, VS_CURRENCY, config)
 }
