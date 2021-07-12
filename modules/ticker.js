@@ -10,7 +10,7 @@ const findCoinById = (id, allCoinsList) => {
 }
 
 function ticker(data, allCoinsList, VS_CURRENCY) {
-  console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       USD`))
+  console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       ${VS_CURRENCY.toUpperCase()}`))
   const rows = []
   try {
     for (coin in data) {

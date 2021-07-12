@@ -2,7 +2,7 @@ title = "Node Crypto Tracker Config"
 
 [ticker]
   coins = ["ethereum","matic-network","litecoin","bitcoin","weth","celsius-degree-token","usd-coin"]
-  vsCurrency = "usd"
+  vsCurrency = "cad" 
   refreshRate = 15
 
 [aave]
