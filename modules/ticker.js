@@ -10,10 +10,9 @@ const findCoinById = (id, allCoinsList) => {
 }
 
 function ticker(data, allCoinsList, VS_CURRENCY) {
+  console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       USD`))
+  const rows = []
   try {
-    console.log(chalk.bold.bgBlueBright(`         Crypto Ticker       USD`))
-    const rows = []
-
     for (coin in data) {
       // Build the Row
       let symbol = findCoinById(coin, allCoinsList).symbol.toUpperCase()
@@ -23,12 +22,13 @@ function ticker(data, allCoinsList, VS_CURRENCY) {
       const row = [symbol, price, change24hr]
       const neg = row[2].includes("-") ? true : false
 
-      // Add Spacing
-      const a = new Array(13 - row[0].length).fill(" ")
+      // Calculate Spacing
+      const a = new Array(8 - row[0].length).fill(" ")
       const space1 = a.join("")
-      const b = new Array(neg ? 13 - row[1].length : 14 - row[1].length).fill(" ")
+      const b = new Array(neg ? 18 - row[1].length : 19 - row[1].length).fill(" ")
       const space2 = b.join("")
 
+      // Construct each row with styling and spacing
       const processedRow = `${chalk.cyanBright(row[0])}${space1}${chalk.yellow(row[1])}${space2}${neg ? chalk.redBright(row[2]) : chalk.greenBright(row[2])}`
       rows.push(processedRow)
     }

@@ -21,7 +21,7 @@ async function updateGasPrice() {
     const data = await res.json()
     return data
   } catch (err) {
-    console.log(err)
+    console.log(`API CALL FAILED: 01 ${err}`)
     return err
   }
 }
@@ -30,9 +30,13 @@ async function updateCoinPrices() {
   // FINAL URL for FETCH
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${COINS_TO_GET}&vs_currencies=${VS_CURRENCY}&include_24hr_change=true&include_last_updated_at=true`
 
-  const res = await fetch(url)
-  const data = await res.json()
-  return data
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+    return data
+  } catch (err) {
+    console.log(`API CALL FAILED: 02 ${err}`)
+  }
 }
 
 async function getAllCoins() {
@@ -42,7 +46,7 @@ async function getAllCoins() {
     allCoinsList = data
     return data
   } catch (err) {
-    console.log(err)
+    console.log(`API CALL FAILED: 03 ${err}`)
   }
 }
 
@@ -73,7 +77,7 @@ async function main() {
   separator("-")
   console.log(`${chalk.bold(chalk.bgWhite.black(`      ✨ DeFi Dashboard ✨      `))}`)
   separator("-")
-  console.log(chalk.bgGrey.bold(`🔥 Gas Price Avg.           ${`${chalk.whiteBright(gasPrice.average)}`} `))
+  console.log(chalk.bgGrey.bold(`🔥 Gas Price Avg.            ${`${chalk.whiteBright(gasPrice.average / 10)}`} `))
   aaveHealthFactor(coinPrices, VS_CURRENCY, config)
 }
 // Init
