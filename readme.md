@@ -1,12 +1,9 @@
 ## Node Ticker - Super Simple Node.js Crypto Tracker
 
-<p align="left">Super simple node.js crypto tracker app powered by CoinGecko and Eth Gas Station APIs. Customize the config.toml set the coins you want to see as well as your aave info to see the health factor!</p>
+<p>Super simple node.js crypto tracker app powered by CoinGecko and Eth Gas Station APIs. Customize the config.toml set the coins you want to see as well as your aave info to see the health factor!</p>
 
-<p align="right">
 <img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/example_screenshot.png" 
-  alt="Example View" 
-  width="292" height="305">
-</p>
+  alt="Example View">
 
 ## Installation & Config
 
