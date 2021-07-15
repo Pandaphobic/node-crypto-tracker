@@ -1,19 +1,23 @@
 {
   "name": "node-crypto-ticker",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Customizeable Node CLI Ticker - Powered by CoinGecko",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "config": "node modules/configurator.js --config"
   },
   "author": "Chris Steffes - Pandaphobic",
   "license": "MIT",
   "dependencies": {
+    "@iarna/toml": "^2.2.5",
     "chalk": "^3.0.0",
+    "commander": "^8.0.0",
     "dotenv": "^10.0.0",
+    "enquirer": "^2.3.6",
     "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.1",
-    "toml": "^3.0.0"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

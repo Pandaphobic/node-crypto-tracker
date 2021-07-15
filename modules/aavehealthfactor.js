@@ -8,9 +8,12 @@
 */
 var chalk = require("chalk");
 const fs = require("fs");
-const toml = require("toml");
+const TOML = require("@iarna/toml");
+const path = require("path");
 
-const config = toml.parse(fs.readFileSync("./config.toml", "utf-8"));
+const config = TOML.parse(
+  fs.readFileSync(path.resolve(__dirname, "../config.toml"), "utf-8")
+);
 
 async function aaveHealthFactor(coinPrices, VS_CURRENCY) {
   // Externals

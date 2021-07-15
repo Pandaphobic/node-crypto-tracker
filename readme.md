@@ -13,7 +13,11 @@
 2. cd into the directory `$ cd node-crypto-ticker`
 3. Install with `$ npm install`
 
-#### Config
+#### Configurator
+
+Launch the configurator with `$ npm run config`
+
+#### Manual Config
 
 Set your desired coins, currency and refresh rate by adding them to the array in the config.toml file. For AAVE, the three existing entries are the minimum requirement to get health factor. For now, you will need to update these manually.
 
