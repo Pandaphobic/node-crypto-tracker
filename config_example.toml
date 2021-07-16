@@ -14,6 +14,6 @@ vsCurrency = "cad"
 refreshRate = 16
 
 [aave]
-collateralInEth = 0.696
-borrowedInEth = 0.403
-borrowedInUsd = 904.34107
+collateralInEth = 6
+borrowedInEth = 4
+borrowedInUsd = 7200
