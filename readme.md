@@ -17,7 +17,7 @@
 
 A config.toml file must be present alongside a .env in the root folder. Your .env should contain your Eth Gas Station API Key. You can setup both manually based off the examples, or you can use the configurator
 
-#### Configurator
+### Configurator
 
 Launch the configurator with `$ npm run config`
 
@@ -30,7 +30,7 @@ This will allow you to set:
 
 Modify you API Keys with `$ npm run apikeys`
 
-#### Manual Config
+### Manual Config
 
 Set your desired coins, currency and refresh rate by adding them to the array in the config.toml file. For AAVE, the three existing entries are the minimum requirement to get health factor. For now, you will need to update these manually.
 
