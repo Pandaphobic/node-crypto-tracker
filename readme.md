@@ -7,17 +7,17 @@
 
 ## Installation & Setup
 
-#### Installation
+### Installation
 
 1. Clone the repo `$ gh repo clone Pandaphobic/node-crypto-ticker`
 2. cd into the directory `$ cd node-crypto-ticker`
 3. Install with `$ npm install`
 
-#### Setup
+### Setup
 
 A config.toml file must be present alongside a .env in the root folder. Your .env should contain your Eth Gas Station API Key. You can setup both manually based off the examples, or you can use the configurator
 
-##### Configurator
+#### Configurator
 
 Launch the configurator with `$ npm run config`
 
@@ -51,7 +51,7 @@ Set your desired coins, currency and refresh rate by adding them to the array in
 **.env**
 
 ```
-ETH_GAS_API_KEY=past_your_api_key_here
+ETH_GAS_API_KEY=paste_your_api_key_here
 ```
 
 #### API Calls Used
