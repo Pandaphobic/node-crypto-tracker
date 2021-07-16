@@ -10,7 +10,7 @@ coins = [
   "dogecoin",
   "weth"
 ]
-vsCurrency = "usd"
+vsCurrency = "cad"
 refreshRate = 16
 
 [aave]
