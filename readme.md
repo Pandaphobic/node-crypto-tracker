@@ -5,21 +5,36 @@
 <img src="https://github.com/Pandaphobic/node-crypto-ticker/blob/main/screenshots/example_screenshot.png" 
   alt="Example View">
 
-## Installation & Config
+## Installation & Setup
 
 #### Installation
 
-1. Clone the repo `gh repo clone Pandaphobic/node-crypto-ticker`
+1. Clone the repo `$ gh repo clone Pandaphobic/node-crypto-ticker`
 2. cd into the directory `$ cd node-crypto-ticker`
 3. Install with `$ npm install`
 
-#### Configurator
+#### Setup
+
+A config.toml file must be present alongside a .env in the root folder. Your .env should contain your Eth Gas Station API Key. You can setup both manually based off the examples, or you can use the configurator
+
+##### Configurator
 
 Launch the configurator with `$ npm run config`
+
+This will allow you to set:
+
+- Coins / Tokens in the Ticker
+- Base currency
+- Ticker Refresh Rate
+- API Key if .env not present already
+
+Modify you API Keys with `$ npm run apikeys`
 
 #### Manual Config
 
 Set your desired coins, currency and refresh rate by adding them to the array in the config.toml file. For AAVE, the three existing entries are the minimum requirement to get health factor. For now, you will need to update these manually.
+
+**config.toml**
 
 ```
 [ticker]
@@ -31,6 +46,12 @@ Set your desired coins, currency and refresh rate by adding them to the array in
   collateralInEth = 5
   borrowedInEth = 4
   borrowedInUsd = 8655
+```
+
+**.env**
+
+```
+ETH_GAS_API_KEY=past_your_api_key_here
 ```
 
 #### API Calls Used

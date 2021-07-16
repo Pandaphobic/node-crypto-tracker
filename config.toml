@@ -4,11 +4,11 @@ title = "Node Crypto Tracker Config"
 coins = [
   "litecoin",
   "bitcoin",
-  "ethereum",
-  "usd-coin",
-  "matic-network",
   "dogecoin",
-  "weth"
+  "matic-network",
+  "ethereum",
+  "weth",
+  "usd-coin"
 ]
 vsCurrency = "cad"
 refreshRate = 16

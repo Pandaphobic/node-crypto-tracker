@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "config": "node modules/configurator.js --config"
+    "config": "node modules/configurator.js --config",
+    "apikeys": "node modules/configurator.js --api-keys"
   },
   "author": "Chris Steffes - Pandaphobic",
   "license": "MIT",
