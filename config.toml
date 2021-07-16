@@ -1,11 +1,19 @@
 title = "Node Crypto Tracker Config"
 
 [ticker]
-  coins = ["ethereum","matic-network","litecoin","bitcoin","weth","celsius-degree-token","usd-coin"]
-  vsCurrency = "USD" 
-  refreshRate = 15
+coins = [
+  "litecoin",
+  "bitcoin",
+  "ethereum",
+  "usd-coin",
+  "matic-network",
+  "dogecoin",
+  "weth"
+]
+vsCurrency = "usd"
+refreshRate = 16
 
 [aave]
-  collateralInEth = 0.696
-  borrowedInEth = 0.403
-  borrowedInUsd = 904.34107
+collateralInEth = 0.696
+borrowedInEth = 0.403
+borrowedInUsd = 904.34107
