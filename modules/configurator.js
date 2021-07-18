@@ -9,7 +9,9 @@ const { prompt } = require("enquirer");
 // DECALRE ACCEPTED CLI ARGS
 program
   .option("-c, --config", "launch configurator")
-  .option("-api, --api-keys", "launch API Key setup");
+  .option("-api, --api-keys", "launch API Key setup")
+  .option("-ac, --add-coins", "add coins to your config file")
+  .option("-cc, --change-currency", "change ticker base currency");
 
 // Create and Modify the config.toml
 async function updateConfig(response) {
@@ -80,6 +82,8 @@ const options = program.opts();
 // Set actions for each ARG
 if (options.config) configurator();
 if (options.apiKeys) apiKeyCofig();
+if (options.addCoins) addCoins();
+if (options.changeCurrency) changeCurrency();
 
 async function configurator() {
   try {
@@ -102,5 +106,54 @@ async function apiKeyCofig() {
     updateApiKeys(response);
   } catch (err) {
     console.log(err);
+  }
+}
+
+async function changeCurrency() {
+  try {
+    const response = await prompt({
+      type: "input",
+      name: "currency",
+      message: "Ticker Currency: ",
+    });
+
+    currentConfig = TOML.parse(
+      fs.readFileSync(path.resolve(__dirname, "../config.toml"))
+    );
+    currentConfig.ticker.vsCurrency = response.currency;
+
+    let newConfig = TOML.stringify(currentConfig);
+    fs.writeFile(path.resolve(__dirname, "../config.toml"), newConfig, err => {
+      if (err) return console.log(err);
+    });
+  } catch {
+    console.log("config.toml File can't be opened.");
+  }
+}
+
+async function addCoins() {
+  try {
+    const response = await prompt({
+      type: "List",
+      name: "coins",
+      message: "Coins to add: ",
+    });
+
+    currentConfig = TOML.parse(
+      fs.readFileSync(path.resolve(__dirname, "../config.toml"))
+    );
+    let coins = await response.coins;
+
+    for (coin in coins) {
+      currentConfig.ticker.coins.push(coins[coin]);
+    }
+
+    console.log(currentConfig.ticker.coins);
+    let newConfig = TOML.stringify(currentConfig);
+    fs.writeFile(path.resolve(__dirname, "../config.toml"), newConfig, err => {
+      if (err) return console.log(err);
+    });
+  } catch {
+    console.log("config.toml File can't be opened.");
   }
 }
