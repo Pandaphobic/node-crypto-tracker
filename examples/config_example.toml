@@ -1,0 +1,17 @@
+title = "Node Crypto Tracker Config"
+
+[ticker]
+coins = [
+  "put",
+  "your",
+  "coins",
+  "here",
+]
+vsCurrency = "usd"
+refreshRate = 16
+
+
+[aave]
+collateralInEth = 6
+borrowedInEth = 4
+borrowedInUsd = 7200

@@ -23,7 +23,9 @@ async function updateConfig(response) {
   } catch (err) {
     currentConfig = currentConfig = TOML.parse(
       // default on fail
-      fs.readFileSync(path.resolve(__dirname, "../examples/config.toml"))
+      fs.readFileSync(
+        path.resolve(__dirname, "../examples/config_example.toml")
+      )
     );
   }
 
