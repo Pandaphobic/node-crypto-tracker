@@ -30,6 +30,11 @@ This will allow you to set:
 
 Modify you API Keys with `$ npm run apikeys`
 
+### Modify Config
+
+Ticker Coins: `$ npm run addCoins`
+Ticker Base Currency: `$ npm run changeCurrency`
+
 ### Manual Config
 
 Set your desired coins, currency and refresh rate by adding them to the array in the config.toml file. For AAVE, the three existing entries are the minimum requirement to get health factor. For now, you will need to update these manually.

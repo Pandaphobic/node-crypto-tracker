@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon index.js",
     "config": "node modules/configurator.js --config",
-    "apikeys": "node modules/configurator.js --api-keys"
+    "apikeys": "node modules/configurator.js --api-keys",
+    "addCoins": "node modules/configurator.js --add-coins",
+    "changeCurrency": "node modules/configurator.js --change-currency"
   },
   "author": "Chris Steffes - Pandaphobic",
   "license": "MIT",
