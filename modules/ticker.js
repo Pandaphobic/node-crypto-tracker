@@ -29,12 +29,10 @@ function ticker(data, allCoinsList, VS_CURRENCY) {
       const neg = row[2].includes("-") ? true : false;
 
       // Calculate Spacing
-      const a = new Array(8 - row[0].length).fill(" ");
-      const space1 = a.join("");
-      const b = new Array(neg ? 18 - row[1].length : 19 - row[1].length).fill(
-        " "
-      );
-      const space2 = b.join("");
+      const space1 = new Array(8 - row[0].length).fill(" ").join("");
+      const space2 = new Array(24 - price.length - change24hr.length)
+        .fill(" ")
+        .join("");
 
       // Construct each row with styling and spacing
       const processedRow = `${chalk.cyanBright(
